@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   divider: {
     fontSize: 24,
     letterSpacing: 4,
-    marginTop: 12,
+    marginTop: 4,
     overflow: 'hidden',
   },
 });
@@ -24,10 +24,13 @@ function Header() {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.header}>Attendance Tracker</Text>
-      <StyledButton title="Add New Subject" />
-      <StyledButton title="Add New Subject" variant="contained" />
-      <StyledButton title="Add New Subject" variant="outlined" />
-      <Text style={[styles.header, styles.divider]}>==============</Text>
+      <Text style={{fontFamily: 'Menlo-Regular'}}>
+        Some description text in the header
+      </Text>
+      <View style={{flexDirection: 'row', gap: 12, marginVertical: 24}}>
+        <StyledButton title="+ Add New Subject" variant="contained" />
+      </View>
+      <Text style={styles.divider}>==============</Text>
     </View>
   );
 }
