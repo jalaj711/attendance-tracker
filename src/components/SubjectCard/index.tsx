@@ -3,20 +3,39 @@ import React from 'react';
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    margin: '12px 8px',
-    padding: '12px  8px',
-    borderRadius: 8,
-    minHeight: '100px',
-    border: '1px solid white',
+    margin: 12,
+    padding: 12,
+    borderRadius: 12,
+    minHeight: 100,
+    borderWidth: 2,
+    backgroundColor: '#fff',
+    color: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  header: {
+    fontSize: 20,
+    color: 'black',
+    fontFamily: 'Menlo-Regular',
+  },
+  percentage: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
   },
 });
 
 export default function SubjectCard() {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <View>
-        <Text>Testing my view</Text>
+        <Text style={styles.header}>Testing my view</Text>
+        <Text>Can miss the next class safely</Text>
+      </View>
+
+      <View style={styles.percentage}>
+        <Text style={styles.header}>26%</Text>
       </View>
     </View>
   );
