@@ -6,40 +6,20 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
+import Index from './src/pages';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
-import SubjectCard from './src/components/SubjectCard';
+const blackBg = {
+  backgroundColor: '#000',
+};
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: Colors.darker,
-      }}>
-      <StatusBar barStyle={'light-content'} backgroundColor={Colors.dark} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={{
-          backgroundColor: Colors.darker,
-        }}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: Colors.black,
-          }}>
-          <SubjectCard />
-        </View>
-      </ScrollView>
+    <SafeAreaView style={blackBg}>
+      <StatusBar barStyle={'light-content'} backgroundColor="#000" />
+      <Index />
     </SafeAreaView>
   );
 }
-
 
 export default App;
