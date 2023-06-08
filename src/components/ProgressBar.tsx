@@ -10,11 +10,20 @@ const styles = StyleSheet.create({
     width: 10,
     height: 15,
     marginHorizontal: 1,
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     backgroundColor: 'white',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#000',
+  },
+  partial_element: {
+    opacity: 0.5,
+    backgroundColor: 'black',
   },
   text: {
     fontFamily: 'Menlo-Regular',
+    lineHeight: 18,
+    fontSize: 18,
   },
 });
 
@@ -26,27 +35,45 @@ function ProgressBar(props: {percentage: number; bgColor?: string}) {
     <View style={styles.container}>
       <Text style={styles.text}>{'['}</Text>
       {[...Array(fullRects)].map(_ => (
-        <View style={[styles.element, {backgroundColor: bgColor}]} />
+        <View
+          style={[
+            styles.element,
+            {backgroundColor: bgColor, borderColor: bgColor},
+          ]}
+        />
       ))}
       <View
         style={[
           styles.element,
-          {width: partialRect, marginRight: 0, backgroundColor: bgColor},
+          {
+            width: partialRect,
+            borderWidth: partialRect !== 0 ? 1 : 0,
+            marginRight: 0,
+            backgroundColor: bgColor,
+            borderColor: bgColor,
+          },
         ]}
       />
       <View
         style={[
           styles.element,
+          styles.partial_element,
           {
-            backgroundColor: 'black',
             width: fullRects < 10 ? 10 - partialRect : 0,
             marginLeft: 0,
+            borderColor: bgColor,
           },
         ]}
       />
 
       {[...Array(fullRects < 10 ? 9 - fullRects : 0)].map(_ => (
-        <View style={[styles.element, {backgroundColor: 'black'}]} />
+        <View
+          style={[
+            styles.element,
+            styles.partial_element,
+            {borderColor: bgColor},
+          ]}
+        />
       ))}
       <Text style={styles.text}>{']'}</Text>
     </View>
