@@ -7,14 +7,20 @@ const style = StyleSheet.create({
     paddingVertical: 8,
     margin: 2,
     alignSelf: 'flex-start',
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderColor: '#000',
   },
   outlined: {
     borderColor: '#fff',
-    borderWidth: 2,
-    borderStyle: 'solid',
   },
   contained: {
     backgroundColor: 'white',
+    borderColor: '#fff',
+  },
+  small: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
   text: {
     letterSpacing: 1,
@@ -32,11 +38,13 @@ function StyledButton(
   props: PressableProps & {
     title: string;
     variant?: 'outlined' | 'contained' | 'default';
+    small?: boolean;
   },
 ) {
   const {title, variant = 'default', ...otherProps} = props;
   var pressableStyles: any[] = [style.button];
   var textStyles: any[] = [style.text];
+
   switch (variant) {
     case 'outlined':
       pressableStyles.push(style.outlined);
@@ -48,6 +56,11 @@ function StyledButton(
     default:
       break;
   }
+
+  if (props.small) {
+    pressableStyles.push(style.small);
+  }
+
   return (
     <Pressable {...otherProps} style={pressableStyles}>
       <Text style={textStyles}>{title}</Text>
