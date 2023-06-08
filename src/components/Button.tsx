@@ -1,7 +1,7 @@
 import React from 'react';
 import {Pressable, PressableProps, StyleSheet, Text} from 'react-native';
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -41,28 +41,28 @@ function StyledButton(
     small?: boolean;
   },
 ) {
-  const {title, variant = 'default', ...otherProps} = props;
-  var pressableStyles: any[] = [style.button];
-  var textStyles: any[] = [style.text];
+  const {title, variant = 'default', style, ...otherProps} = props;
+  var pressableStyles: any[] = [styles.button];
+  var textStyles: any[] = [styles.text];
 
   switch (variant) {
     case 'outlined':
-      pressableStyles.push(style.outlined);
+      pressableStyles.push(styles.outlined);
       break;
     case 'contained':
-      pressableStyles.push(style.contained);
-      textStyles.push(style.contained_text);
+      pressableStyles.push(styles.contained);
+      textStyles.push(styles.contained_text);
       break;
     default:
       break;
   }
 
   if (props.small) {
-    pressableStyles.push(style.small);
+    pressableStyles.push(styles.small);
   }
 
   return (
-    <Pressable {...otherProps} style={pressableStyles}>
+    <Pressable style={[pressableStyles, style]} {...otherProps}>
       <Text style={textStyles}>{title}</Text>
     </Pressable>
   );

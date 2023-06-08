@@ -11,6 +11,7 @@ import {ScrollView} from 'react-native';
 import SubjectCard from '../components/SubjectCard';
 import Header from '../components/Header';
 import SubjectType from '../types/SubjectType';
+import AddSubject from '../components/AddSubject';
 
 const blackBg = {
   backgroundColor: '#000',
@@ -62,19 +63,18 @@ function Index(): JSX.Element {
     }
   };
   return (
-    <>
+    <ScrollView style={blackBg}>
       <Header />
-      <ScrollView style={blackBg}>
-        {subjects.map((subject, index) => (
-          <SubjectCard
-            subject={subject}
-            onClassAdd={handleClassAdd}
-            onClassRemove={handleClassAbsent}
-            key={index}
-          />
-        ))}
-      </ScrollView>
-    </>
+      <AddSubject onAdd={subj => setSubjects([...subjects, subj])} />
+      {subjects.map((subject, index) => (
+        <SubjectCard
+          subject={subject}
+          onClassAdd={handleClassAdd}
+          onClassRemove={handleClassAbsent}
+          key={index}
+        />
+      ))}
+    </ScrollView>
   );
 }
 
