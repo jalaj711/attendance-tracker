@@ -49,7 +49,7 @@ function AddSubject(props: {
   onAdd: (subj: SubjectType) => any;
 }) {
   const [subject, setSubject] = useState<SubjectType>({
-    id: -1,
+    id: '',
     title: '',
     classes_attended: 0,
     classes_total: 0,

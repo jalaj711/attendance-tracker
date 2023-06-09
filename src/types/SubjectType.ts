@@ -1,5 +1,5 @@
 export default interface SubjectType {
-  id: number;
+  id: string;
   title: string;
   classes_attended: number;
   classes_total: number;

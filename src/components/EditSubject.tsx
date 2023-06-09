@@ -53,7 +53,7 @@ function EditSubject(props: {
   const [subject, setSubject] = useState<SubjectType>(
     props.subject === null
       ? {
-          id: -1,
+          id: '',
           title: '',
           classes_attended: 0,
           classes_total: 0,
@@ -66,7 +66,7 @@ function EditSubject(props: {
     const __subj =
       props.subject === null
         ? {
-            id: -1,
+            id: '',
             title: '',
             classes_attended: 0,
             classes_total: 0,

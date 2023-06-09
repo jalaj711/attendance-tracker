@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   message: {
     fontFamily: 'Menlo-Regular',
-    marginBottom: 8
+    marginBottom: 8,
   },
   percentage: {
     display: 'flex',
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
 
 export default function SubjectCard(props: {
   subject: SubjectType;
-  onClassAdd: (id: number) => any;
-  onClassRemove: (id: number) => any;
+  onClassAdd: (id: string) => any;
+  onClassRemove: (id: string) => any;
   onEditSubjectClick: () => any;
 }) {
   const {subject} = props;
