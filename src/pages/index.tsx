@@ -13,7 +13,12 @@ import Header from '../components/Header';
 import SubjectType from '../types/SubjectType';
 import AddSubject from '../components/AddSubject';
 import EditSubject from '../components/EditSubject';
-import {createSubject, loadAll, updateSubject} from '../utils/storage';
+import {
+  createSubject,
+  deleteSubject,
+  loadAll,
+  updateSubject,
+} from '../utils/storage';
 
 const blackBg = {
   backgroundColor: '#000',
@@ -82,7 +87,13 @@ function Index(): JSX.Element {
     const subj = subjects.findIndex((s: SubjectType) => s.id === _subj.id);
     if (subj > -1) {
       var subjs_copy = subjects.slice(0, subj).concat(subjects.slice(subj + 1));
-      setSubjects(subjs_copy);
+      deleteSubject(_subj, (error, _, ids) => {
+        if (error) {
+        } else {
+          setSubjects(subjs_copy);
+          setSubjectIDs(ids || []);
+        }
+      });
     }
   };
 

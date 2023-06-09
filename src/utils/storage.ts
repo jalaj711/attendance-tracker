@@ -141,6 +141,40 @@ export const createSubject = (
   });
 };
 
+export const deleteSubject = (
+  subject: SubjectType,
+  onCompleteCallback: (
+    error: Error | null,
+    subject: SubjectType | null,
+    subject_ids: string[] | null,
+  ) => any,
+) => {
+  console.log('params', subject, subject);
+  loadSubjectIDs((error, ids) => {
+    if (error || ids === null) {
+      onCompleteCallback(error, null, null);
+    } else {
+      const index = ids.indexOf(subject.id);
+      if (index > -1) {
+        const new_ids = ids.slice(0, index).concat(ids.slice(index + 1));
+        AsyncStorage.setItem(keys.IDS, JSON.stringify(new_ids), _error => {
+          if (_error) {
+            onCompleteCallback(error, null, null);
+          } else {
+            AsyncStorage.removeItem(subject.id, __error => {
+              if (__error) {
+                onCompleteCallback(__error, null, null);
+              } else {
+                onCompleteCallback(null, subject, new_ids);
+              }
+            });
+          }
+        });
+      }
+    }
+  });
+};
+
 export const updateSubject = (
   subject: SubjectType,
   onCompleteCallback: (error: Error | null, subject: SubjectType | null) => any,
