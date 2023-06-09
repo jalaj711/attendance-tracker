@@ -18,6 +18,7 @@ const blackBg = {
 };
 
 function Index(): JSX.Element {
+  const [showAddModal, setShowAddModal] = useState(false);
   const [subjects, setSubjects] = useState<SubjectType[]>([
     {
       id: 0,
@@ -64,8 +65,15 @@ function Index(): JSX.Element {
   };
   return (
     <ScrollView style={blackBg}>
-      <Header />
-      <AddSubject onAdd={subj => setSubjects([...subjects, subj])} />
+      <Header onAddSubjectClick={() => setShowAddModal(true)} />
+      <AddSubject
+        show={showAddModal}
+        handleHide={() => setShowAddModal(false)}
+        onAdd={subj => {
+          setSubjects([...subjects, subj]);
+          setShowAddModal(false);
+        }}
+      />
       {subjects.map((subject, index) => (
         <SubjectCard
           subject={subject}

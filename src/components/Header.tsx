@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Header() {
+function Header(props: {onAddSubjectClick: () => any}) {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.header}>Attendance Tracker</Text>
@@ -28,7 +28,11 @@ function Header() {
         Some description text in the header
       </Text>
       <View style={{flexDirection: 'row', gap: 12, marginVertical: 24}}>
-        <StyledButton title="+ Add New Subject" variant="contained" />
+        <StyledButton
+          title="+ Add New Subject"
+          variant="contained"
+          onPress={props.onAddSubjectClick}
+        />
       </View>
       <Text style={styles.divider}>==============</Text>
     </View>
