@@ -12,6 +12,7 @@ import SubjectCard from '../components/SubjectCard';
 import Header from '../components/Header';
 import SubjectType from '../types/SubjectType';
 import AddSubject from '../components/AddSubject';
+import EditSubject from '../components/EditSubject';
 
 const blackBg = {
   backgroundColor: '#000',
@@ -19,6 +20,7 @@ const blackBg = {
 
 function Index(): JSX.Element {
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editSubject, setEditSubject] = useState<SubjectType | null>(null);
   const [subjects, setSubjects] = useState<SubjectType[]>([
     {
       id: 0,
@@ -63,6 +65,23 @@ function Index(): JSX.Element {
       setSubjects(subjs_copy);
     }
   };
+
+  const handleEditSubject = (_subj: SubjectType) => {
+    const subj = subjects.findIndex((s: SubjectType) => s.id === _subj.id);
+    if (subj > -1) {
+      var subjs_copy = subjects.slice();
+      subjs_copy[subj] = _subj;
+      setSubjects(subjs_copy);
+    }
+  };
+
+  const handleDeleteSubject = (_subj: SubjectType) => {
+    const subj = subjects.findIndex((s: SubjectType) => s.id === _subj.id);
+    if (subj > -1) {
+      var subjs_copy = subjects.slice(0, subj).concat(subjects.slice(subj + 1));
+      setSubjects(subjs_copy);
+    }
+  };
   return (
     <ScrollView style={blackBg}>
       <Header onAddSubjectClick={() => setShowAddModal(true)} />
@@ -74,12 +93,26 @@ function Index(): JSX.Element {
           setShowAddModal(false);
         }}
       />
+      <EditSubject
+        show={editSubject !== null}
+        subject={editSubject}
+        handleHide={() => setEditSubject(null)}
+        onSave={subj => {
+          setEditSubject(null);
+          handleEditSubject(subj);
+        }}
+        onDelete={subj => {
+          setEditSubject(null);
+          handleDeleteSubject(subj);
+        }}
+      />
       {subjects.map((subject, index) => (
         <SubjectCard
           subject={subject}
           onClassAdd={handleClassAdd}
           onClassRemove={handleClassAbsent}
           key={index}
+          onEditSubjectClick={() => setEditSubject(subject)}
         />
       ))}
     </ScrollView>

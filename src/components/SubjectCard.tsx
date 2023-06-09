@@ -11,19 +11,24 @@ const styles = StyleSheet.create({
     minHeight: 100,
     backgroundColor: '#000',
     color: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   head: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   header: {
     fontSize: 20,
     color: '#fff',
     fontFamily: 'Menlo-Regular',
+    alignSelf: 'center',
   },
   message: {
-    maxWidth: '50%',
     fontFamily: 'Menlo-Regular',
+    marginBottom: 8
   },
   percentage: {
     display: 'flex',
@@ -39,6 +44,7 @@ export default function SubjectCard(props: {
   subject: SubjectType;
   onClassAdd: (id: number) => any;
   onClassRemove: (id: number) => any;
+  onEditSubjectClick: () => any;
 }) {
   const {subject} = props;
   const percentage = Math.round(
@@ -83,30 +89,39 @@ export default function SubjectCard(props: {
   }, [subject, percentage]);
   return (
     <View style={[styles.container]}>
-      <View style={styles.head}>
-        <Text style={styles.header}>{subject.title}</Text>
-        <View style={styles.percentage}>
+      <View style={{width: '55%'}}>
+        <View style={styles.head}>
+          <Text style={styles.header}>{subject.title}</Text>
           <StyledButton
+            title="[edit]"
+            // variant="outlined"
             small
-            variant="outlined"
-            title="-"
-            onPress={() => props.onClassRemove(props.subject.id)}
-          />
-          <Text style={styles.header}>{percentage}%</Text>
-          <StyledButton
-            small
-            variant="contained"
-            title="+"
-            onPress={() => props.onClassAdd(props.subject.id)}
+            onPress={props.onEditSubjectClick}
+            textStyle={{color: '#aaa'}}
           />
         </View>
+        <Text style={styles.message}>{message}</Text>
+        <View style={styles.head}>
+          <ProgressBar percentage={percentage} bgColor={color} />
+          <Text style={[styles.message, {opacity: 0.6}]}>
+            {subject.classes_attended}/{subject.classes_total}
+          </Text>
+        </View>
       </View>
-      <Text style={styles.message}>{message}</Text>
-      <View style={{marginTop: 12, flexDirection: 'row'}}>
-        <ProgressBar percentage={percentage} bgColor={color} />
-        <Text style={[styles.message, {opacity: 0.6}]}>
-          {props.subject.classes_attended}/{props.subject.classes_total}
-        </Text>
+      <View style={styles.percentage}>
+        <StyledButton
+          small
+          variant="outlined"
+          title="-"
+          onPress={() => props.onClassRemove(subject.id)}
+        />
+        <Text style={styles.header}>{percentage}%</Text>
+        <StyledButton
+          small
+          variant="contained"
+          title="+"
+          onPress={() => props.onClassAdd(subject.id)}
+        />
       </View>
     </View>
   );

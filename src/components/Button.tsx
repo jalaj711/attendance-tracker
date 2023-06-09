@@ -1,5 +1,13 @@
 import React from 'react';
-import {Pressable, PressableProps, StyleSheet, Text} from 'react-native';
+import {
+  Pressable,
+  PressableProps,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   button: {
@@ -39,9 +47,11 @@ function StyledButton(
     title: string;
     variant?: 'outlined' | 'contained' | 'default';
     small?: boolean;
+    style?: StyleProp<ViewStyle>;
+    textStyle?: StyleProp<TextStyle>;
   },
 ) {
-  const {title, variant = 'default', style, ...otherProps} = props;
+  const {title, variant = 'default', textStyle, style, ...otherProps} = props;
   var pressableStyles: any[] = [styles.button];
   var textStyles: any[] = [styles.text];
 
@@ -63,7 +73,7 @@ function StyledButton(
 
   return (
     <Pressable style={[pressableStyles, style]} {...otherProps}>
-      <Text style={textStyles}>{title}</Text>
+      <Text style={[textStyles, textStyle]}>{title}</Text>
     </Pressable>
   );
 }
