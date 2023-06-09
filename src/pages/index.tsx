@@ -13,7 +13,7 @@ import Header from '../components/Header';
 import SubjectType from '../types/SubjectType';
 import AddSubject from '../components/AddSubject';
 import EditSubject from '../components/EditSubject';
-import {createSubject, loadAll} from '../utils/storage';
+import {createSubject, loadAll, updateSubject} from '../utils/storage';
 
 const blackBg = {
   backgroundColor: '#000',
@@ -32,7 +32,12 @@ function Index(): JSX.Element {
       var subjs_copy = subjects.slice();
       subjs_copy[subj].classes_attended += 1;
       subjs_copy[subj].classes_total += 1;
-      setSubjects(subjs_copy);
+      updateSubject(subjs_copy[subj], (error, _) => {
+        if (error) {
+        } else {
+          setSubjects(subjs_copy);
+        }
+      });
     }
   };
   const handleClassAbsent = (subj_id: string) => {
@@ -40,7 +45,12 @@ function Index(): JSX.Element {
     if (subj > -1) {
       var subjs_copy = subjects.slice();
       subjs_copy[subj].classes_total += 1;
-      setSubjects(subjs_copy);
+      updateSubject(subjs_copy[subj], (error, _) => {
+        if (error) {
+        } else {
+          setSubjects(subjs_copy);
+        }
+      });
     }
   };
 

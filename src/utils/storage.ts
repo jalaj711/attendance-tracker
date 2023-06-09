@@ -141,6 +141,19 @@ export const createSubject = (
   });
 };
 
+export const updateSubject = (
+  subject: SubjectType,
+  onCompleteCallback: (error: Error | null, subject: SubjectType | null) => any,
+) => {
+  AsyncStorage.setItem(subject.id, JSON.stringify(subject), _error => {
+    if (_error) {
+      onCompleteCallback(_error, null);
+    } else {
+      onCompleteCallback(null, subject);
+    }
+  });
+};
+
 export const loadAll = (
   onCompleteCallback: (
     error: null | Error,
