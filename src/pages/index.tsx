@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 
 import SubjectCard from '../components/SubjectCard';
@@ -13,42 +13,20 @@ import Header from '../components/Header';
 import SubjectType from '../types/SubjectType';
 import AddSubject from '../components/AddSubject';
 import EditSubject from '../components/EditSubject';
+import {createSubject, loadAll} from '../utils/storage';
 
 const blackBg = {
   backgroundColor: '#000',
+  minHeight: '100%',
 };
 
 function Index(): JSX.Element {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editSubject, setEditSubject] = useState<SubjectType | null>(null);
-  const [subjects, setSubjects] = useState<SubjectType[]>([
-    {
-      id: 0,
-      title: 'MAC401',
-      classes_attended: 4,
-      classes_total: 5,
-      target_level: 75,
-      warning_level: 80,
-    },
-    {
-      id: 1,
-      title: 'EEC401',
-      classes_attended: 3,
-      classes_total: 5,
-      target_level: 75,
-      warning_level: 80,
-    },
-    {
-      id: 2,
-      title: 'ECC401',
-      classes_attended: 31,
-      classes_total: 40,
-      target_level: 75,
-      warning_level: 80,
-    },
-  ]);
+  const [subjects, setSubjects] = useState<SubjectType[]>([]);
+  const [subjectIDs, setSubjectIDs] = useState<string[]>([]);
 
-  const handleClassAdd = (subj_id: number) => {
+  const handleClassAdd = (subj_id: string) => {
     const subj = subjects.findIndex((s: SubjectType) => s.id === subj_id);
     if (subj > -1) {
       var subjs_copy = subjects.slice();
@@ -57,13 +35,23 @@ function Index(): JSX.Element {
       setSubjects(subjs_copy);
     }
   };
-  const handleClassAbsent = (subj_id: number) => {
+  const handleClassAbsent = (subj_id: string) => {
     const subj = subjects.findIndex((s: SubjectType) => s.id === subj_id);
     if (subj > -1) {
       var subjs_copy = subjects.slice();
       subjs_copy[subj].classes_total += 1;
       setSubjects(subjs_copy);
     }
+  };
+
+  const handleCreateSubject = (_subj: SubjectType) => {
+    createSubject(_subj, subjectIDs.slice(), (error, new_subject) => {
+      if (error || new_subject === null) {
+      } else {
+        setSubjects([...subjects, _subj]);
+        setSubjectIDs([...subjectIDs, new_subject.id]);
+      }
+    });
   };
 
   const handleEditSubject = (_subj: SubjectType) => {
@@ -82,6 +70,18 @@ function Index(): JSX.Element {
       setSubjects(subjs_copy);
     }
   };
+
+  useEffect(() => {
+    loadAll((error, loaded_subjects, loaded_subject_ids) => {
+      if (error) {
+      } else {
+        setSubjects(loaded_subjects || []);
+        setSubjectIDs(loaded_subject_ids || []);
+      }
+    });
+  }, []);
+
+  console.log(subjectIDs);
   return (
     <ScrollView style={blackBg}>
       <Header onAddSubjectClick={() => setShowAddModal(true)} />
@@ -89,7 +89,7 @@ function Index(): JSX.Element {
         show={showAddModal}
         handleHide={() => setShowAddModal(false)}
         onAdd={subj => {
-          setSubjects([...subjects, subj]);
+          handleCreateSubject(subj);
           setShowAddModal(false);
         }}
       />
