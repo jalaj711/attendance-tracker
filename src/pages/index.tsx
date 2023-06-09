@@ -69,7 +69,12 @@ function Index(): JSX.Element {
     if (subj > -1) {
       var subjs_copy = subjects.slice();
       subjs_copy[subj] = _subj;
-      setSubjects(subjs_copy);
+      updateSubject(subjs_copy[subj], (error, _) => {
+        if (error) {
+        } else {
+          setSubjects(subjs_copy);
+        }
+      });
     }
   };
 
