@@ -35,12 +35,13 @@ function ProgressBar(props: {percentage: number; bgColor?: string}) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{'['}</Text>
-      {[...Array(fullRects)].map(_ => (
+      {[...Array(fullRects)].map((_, i) => (
         <View
           style={[
             styles.element,
             {backgroundColor: bgColor, borderColor: bgColor},
           ]}
+          key={'fullrect-' + i}
         />
       ))}
       <View
@@ -60,7 +61,7 @@ function ProgressBar(props: {percentage: number; bgColor?: string}) {
           styles.element,
           styles.partial_element,
           {
-            width: fullRects < 10 ? 10 - partialRect : 0,
+            width: fullRects > 0 && fullRects < 10 ? 10 - partialRect : 0,
             borderWidth: fullRects % 10 ? 1 : 0,
             marginLeft: 0,
             borderLeftWidth: 0,
@@ -69,13 +70,18 @@ function ProgressBar(props: {percentage: number; bgColor?: string}) {
         ]}
       />
 
-      {[...Array(fullRects < 10 ? 9 - fullRects : 0)].map(_ => (
+      {[
+        ...Array(
+          fullRects < 10 ? 10 - fullRects - Math.ceil(partialRect / 10) : 0,
+        ),
+      ].map((_, i) => (
         <View
           style={[
             styles.element,
             styles.partial_element,
             {borderColor: bgColor},
           ]}
+          key={'emptyrect-' + i}
         />
       ))}
       <Text style={styles.text}>{']'}</Text>
