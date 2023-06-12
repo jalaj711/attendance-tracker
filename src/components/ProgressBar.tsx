@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
@@ -47,7 +48,7 @@ function ProgressBar(props: {percentage: number; bgColor?: string}) {
           styles.element,
           {
             width: partialRect,
-            borderWidth: partialRect !== 0 ? 1 : 0,
+            borderWidth: 0,
             marginRight: 0,
             backgroundColor: bgColor,
             borderColor: bgColor,
@@ -60,7 +61,9 @@ function ProgressBar(props: {percentage: number; bgColor?: string}) {
           styles.partial_element,
           {
             width: fullRects < 10 ? 10 - partialRect : 0,
+            borderWidth: fullRects % 10 ? 1 : 0,
             marginLeft: 0,
+            borderLeftWidth: 0,
             borderColor: bgColor,
           },
         ]}
