@@ -43,19 +43,21 @@ const styles = StyleSheet.create({
   },
 });
 
+const defaultData = {
+  id: '',
+  title: '',
+  classes_attended: 0,
+  classes_total: 0,
+  target_level: 0,
+  warning_level: 0,
+};
+
 function AddSubject(props: {
   show: boolean;
   handleHide: () => any;
   onAdd: (subj: SubjectType) => any;
 }) {
-  const [subject, setSubject] = useState<SubjectType>({
-    id: '',
-    title: '',
-    classes_attended: 0,
-    classes_total: 0,
-    target_level: 0,
-    warning_level: 0,
-  });
+  const [subject, setSubject] = useState<SubjectType>(defaultData);
   return (
     <Modal
       animationType="fade"
@@ -143,6 +145,7 @@ function AddSubject(props: {
             style={styles.button}
             onPress={() => {
               props.onAdd(subject);
+              setSubject(defaultData);
             }}
           />
         </View>

@@ -107,7 +107,6 @@ function Index(): JSX.Element {
     });
   }, []);
 
-  console.log(subjectIDs);
   return (
     <ScrollView style={blackBg}>
       <Header onAddSubjectClick={() => setShowAddModal(true)} />
