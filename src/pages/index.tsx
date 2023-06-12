@@ -19,6 +19,7 @@ import {
   loadAll,
   updateSubject,
 } from '../utils/storage';
+import LoadingScreen from '../components/InitialLoadScreen';
 
 const blackBg = {
   backgroundColor: '#000',
@@ -30,6 +31,7 @@ function Index(): JSX.Element {
   const [editSubject, setEditSubject] = useState<SubjectType | null>(null);
   const [subjects, setSubjects] = useState<SubjectType[]>([]);
   const [subjectIDs, setSubjectIDs] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleClassAdd = (subj_id: string) => {
     const subj = subjects.findIndex((s: SubjectType) => s.id === subj_id);
@@ -98,15 +100,20 @@ function Index(): JSX.Element {
   };
 
   useEffect(() => {
+    setLoading(true);
     loadAll((error, loaded_subjects, loaded_subject_ids) => {
       if (error) {
       } else {
+        setLoading(false);
         setSubjects(loaded_subjects || []);
         setSubjectIDs(loaded_subject_ids || []);
       }
     });
   }, []);
 
+  if (loading) {
+    return <LoadingScreen />;
+  }
   return (
     <ScrollView style={blackBg}>
       <Header onAddSubjectClick={() => setShowAddModal(true)} />
