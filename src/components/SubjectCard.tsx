@@ -47,9 +47,10 @@ export default function SubjectCard(props: {
   onEditSubjectClick: () => any;
 }) {
   const {subject} = props;
-  const percentage = Math.round(
-    (subject.classes_attended / subject.classes_total) * 100,
-  );
+  const percentage =
+    subject.classes_total === 0
+      ? 0
+      : Math.round((subject.classes_attended / subject.classes_total) * 100);
   const [message, setMessage] = useState('');
   const [color, setColor] = useState('');
 
